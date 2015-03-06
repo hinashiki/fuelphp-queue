@@ -1,0 +1,16 @@
+{
+	"name": "hinashiki/fuelphp-queue",
+	"description": "FuelPHP 1.7.x or later, add original Queue system",
+	"type": "fuel-package",
+	"homepage": "https://github.com/hinashiki/fuelphp-queue",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "hinashiki",
+			"email": "aono@slash-one.com"
+		}
+	],
+	"require": {
+		"composer/installers": "~1.0"
+	}
+}
