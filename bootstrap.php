@@ -15,3 +15,4 @@
 \Autoloader::add_classes(array(
 	// 'Seo\\Seo'        => __DIR__.'/classes/seo.php',
 ));
+\Config::load('queue', true);
