@@ -70,13 +70,4 @@ return array(
 		'deleted' => 1,
 	),
 
-	/**
-	 * task_notify_callback
-	 *
-	 * @param string $message
-	 */
-	'task_notify_callback' => function($message)
-	{
-		\Log::warning($message);
-	},
 );

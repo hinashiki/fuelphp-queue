@@ -33,14 +33,13 @@ class Queues
 		try
 		{
 			// check dead queues
-			$recover = \Queue\Model_TaskQueue::recover_zombie_queues();
+			$recover = \Model_TaskQueue::recover_zombie_queues();
 			if( ! empty($recover))
 			{
-				$callback = \Config::get('queue.task_notify_callback');
-				$callback('zombie task recovered. ids = '.implode(',', $recover));
+				\Model_TaskQueue::notify('zombie task recovered. ids = '.implode(',', $recover));
 			}
 			// check queues
-			$queue = \Queue\Model_TaskQueue::pickup();
+			$queue = \Model_TaskQueue::pickup();
 			if(empty($queue))
 			{
 				return;
@@ -53,7 +52,7 @@ class Queues
 			);
 
 			// finish (update to success) queue
-			\Queue\Model_TaskQueue::finish($queue['id'], \Queue\Model_TaskQueue::STATUS_SUCCESS);
+			\Model_TaskQueue::finish($queue['id'], \Model_TaskQueue::STATUS_SUCCESS);
 		}
 		catch(\Exception $e)
 		{
@@ -64,8 +63,8 @@ class Queues
 			if( isset($queue) and ! empty($queue))
 			{
 				// finish (update to error) queue
-				\Queue\Model_TaskQueue::finish($queue['id'], \Queue\Model_TaskQueue::STATUS_ERROR);
-				// send to callback method
+				\Model_TaskQueue::finish($queue['id'], \Model_TaskQueue::STATUS_ERROR);
+				// send to notify method
 				$body = array();
 				$body[] = 'oisyna task queue error occured.';
 				$body[] = '--------------------------------';
@@ -80,8 +79,7 @@ class Queues
 				{
 					$body[] = 'reason: '.$e->getMessage();
 				}
-				$callback = \Config::get('queue.task_notify_callback');
-				$callback($body);
+				\Model_TaskQueue::notify($body);
 			}
 		}
 		finally
@@ -99,7 +97,7 @@ class Queues
 		try
 		{
 			\DB::start_transaction();
-			$query = \DB::delete('task_queues')->where('job_status', \Queue\Model_TaskQueue::STATUS_SUCCESS)
+			$query = \DB::delete('task_queues')->where('job_status', \Model_TaskQueue::STATUS_SUCCESS)
 				->where('updated_at', '<=', date('Y-m-d', strtotime(\Config::get('queue.success_queue_delete_term'))));
 			$query->execute();
 			\DB::commit_transaction();

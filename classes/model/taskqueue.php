@@ -167,4 +167,20 @@ class Model_TaskQueue extends \Orm\Model
 		}
 		return $return;
 	}
+
+	/**
+	 * notify function
+	 *
+	 * @param mixed $msg
+	 * @return void
+	 */
+	public static function notify($msg)
+	{
+		if(is_array($msg))
+		{
+			$msg = implode("\n", $msg);
+		}
+		\Log::warning($msg);
+	}
+
 }
