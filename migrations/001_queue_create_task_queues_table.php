@@ -4,7 +4,7 @@
  *
  */
 namespace Fuel\Migrations;
-class Create_task_queues_table
+class Queue_create_task_queues_table
 {
 	public function up()
 	{
