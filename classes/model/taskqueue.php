@@ -9,6 +9,7 @@
  * @copyright  2015 - Hinashiki
  * @link       https://github.com/hinashiki/fuelphp-queue
  */
+namespace Queue;
 class Model_TaskQueue extends \Orm\Model
 {
 
