@@ -1,7 +1,13 @@
 <?php
 /**
- * create task_queues_table table
+ * Queue Package
  *
+ * @package    Queue
+ * @version    0.1
+ * @author     Hinashiki
+ * @license    MIT License
+ * @copyright  2015 - Hinashiki
+ * @link       https://github.com/hinashiki/fuelphp-queue
  */
 namespace Fuel\Migrations;
 class Queue_create_task_queues_table
