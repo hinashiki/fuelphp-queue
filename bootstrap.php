@@ -13,6 +13,6 @@
 \Autoloader::add_namespace('Queue', __DIR__.'/classes/');
 \Autoloader::add_core_namespace('Queue');
 \Autoloader::add_classes(array(
-	// 'Seo\\Seo'        => __DIR__.'/classes/seo.php',
+	'Queue\\Model_TaskQueue' => __DIR__.'/classes/model/taskqueue.php',
 ));
 \Config::load('queue', true);
