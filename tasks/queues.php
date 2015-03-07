@@ -10,7 +10,7 @@
  * @link       https://github.com/hinashiki/fuelphp-queue
  */
 namespace Fuel\Tasks;
-class Queues extends \TaskBase
+class Queues
 {
 	private $__process_file_name = '';
 
@@ -33,14 +33,14 @@ class Queues extends \TaskBase
 		try
 		{
 			// check dead queues
-			$recover = \Model_TaskQueue::recover_zombie_queues();
+			$recover = \Queue\Model_TaskQueue::recover_zombie_queues();
 			if( ! empty($recover))
 			{
 				$callback = \Config::get('queue.task_notify_callback');
 				$callback('zombie task recovered. ids = '.implode(',', $recover));
 			}
 			// check queues
-			$queue = \Model_TaskQueue::pickup();
+			$queue = \Queue\Model_TaskQueue::pickup();
 			if(empty($queue))
 			{
 				return;
@@ -53,7 +53,7 @@ class Queues extends \TaskBase
 			);
 
 			// finish (update to success) queue
-			\Model_TaskQueue::finish($queue['id'], \Model_TaskQueue::STATUS_SUCCESS);
+			\Queue\Model_TaskQueue::finish($queue['id'], \Queue\Model_TaskQueue::STATUS_SUCCESS);
 		}
 		catch(\Exception $e)
 		{
@@ -64,7 +64,7 @@ class Queues extends \TaskBase
 			if( isset($queue) and ! empty($queue))
 			{
 				// finish (update to error) queue
-				\Model_TaskQueue::finish($queue['id'], \Model_TaskQueue::STATUS_ERROR);
+				\Queue\Model_TaskQueue::finish($queue['id'], \Queue\Model_TaskQueue::STATUS_ERROR);
 				// send to callback method
 				$body = array();
 				$body[] = 'oisyna task queue error occured.';
@@ -99,7 +99,7 @@ class Queues extends \TaskBase
 		try
 		{
 			\DB::start_transaction();
-			$query = \DB::delete('task_queues')->where('job_status', \Model_TaskQueue::STATUS_SUCCESS)
+			$query = \DB::delete('task_queues')->where('job_status', \Queue\Model_TaskQueue::STATUS_SUCCESS)
 				->where('updated_at', '<=', date('Y-m-d', strtotime(\Config::get('queue.success_queue_delete_term'))));
 			$query->execute();
 			\DB::commit_transaction();
