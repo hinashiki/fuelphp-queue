@@ -52,7 +52,7 @@ class Queue_create_task_queues_table
 				),
 				'deleted' => array(
 					'type' => 'tinyint',
-					'default' => 0,
+					'default' => \Config::get('queue.logical_delete.not_deleted'),
 				),
 				'created_at' => array(
 					'type' => 'datetime',

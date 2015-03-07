@@ -30,19 +30,15 @@ class Model_TaskQueue extends \Orm\Model
 	);
 
 	protected static $_observers = array(
-		'Orm\\Observer_CreatedAt' => array(
+		'\\Orm\\Observer_CreatedAt' => array(
 			'events' => array('before_insert'),
 			'mysql_timestamp' => true,
 			'property' => 'created_at',
 		),
-		'Orm\\Observer_UpdatedAt' => array(
+		'\\Orm\\Observer_UpdatedAt' => array(
 			'events' => array('before_save'),
 			'mysql_timestamp' => true,
 			'property' => 'updated_at',
-		),
-		'Observer_Deleted' => array(
-			'events' => array('before_insert'),
-			'property' => 'deleted',
 		),
 	);
 
@@ -141,6 +137,7 @@ class Model_TaskQueue extends \Orm\Model
 			'options'        => \Format::forge($options)->to_json(),
 			'duplicate_type' => $duplicate_type,
 			'job_status'     => static::STATUS_WAIT,
+			'deleted'        => \Config::get('queue.logical_delete.not_deleted'),
 		);
 		self::forge($save_data)->save();
 	}
