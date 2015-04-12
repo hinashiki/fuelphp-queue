@@ -66,7 +66,7 @@ class Queues
 				\Model_TaskQueue::finish($queue['id'], \Model_TaskQueue::STATUS_ERROR);
 				// send to notify method
 				$body = array();
-				$body[] = 'oisyna task queue error occured.';
+				$body[] = 'task queue error occured.';
 				$body[] = '--------------------------------';
 				$body[] = 'id: '.$queue['id'];
 				$body[] = 'method: '.$queue['method'];
