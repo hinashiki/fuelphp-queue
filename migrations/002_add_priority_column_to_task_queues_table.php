@@ -15,7 +15,7 @@ class Add_priority_column_to_task_queues_table
 	public function up()
 	{
 		\DBUtil::add_fields('task_queues', array(
-			'duplicate_type' => array(
+			'priority' => array(
 				'type' => 'tinyint',
 				'default' => 0,
 				'unsigned' => true,
@@ -27,6 +27,6 @@ class Add_priority_column_to_task_queues_table
 	public function down()
 	{
 		// drop
-		\DBUtil::drop_fields('task_queues', 'duplicate_type');
+		\DBUtil::drop_fields('task_queues', 'priority');
 	}
 }
