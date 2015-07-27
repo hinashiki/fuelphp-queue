@@ -3,7 +3,7 @@
  * Queue Package
  *
  * @package    Queue
- * @version    0.1
+ * @version    0.2
  * @author     Hinashiki
  * @license    MIT License
  * @copyright  2015 - Hinashiki
@@ -23,6 +23,7 @@ class Model_TaskQueue extends \Orm\Model
 		'id',
 		'method',
 		'options',
+		'priority',
 		'duplicate_type',
 		'job_status',
 		'deleted',
@@ -60,6 +61,7 @@ class Model_TaskQueue extends \Orm\Model
 			->where('job_status', static::STATUS_WAIT)
 			->where('deleted', \Config::get('queue.logical_delete.not_deleted'))
 			->limit(1)
+			->order_by('priority', 'ASC')
 			->order_by('id', 'ASC');
 		if( ! empty($exclude_type))
 		{
@@ -125,17 +127,23 @@ class Model_TaskQueue extends \Orm\Model
 	 * @param string $method
 	 *        array  $options
 	 *        int    $duplicate_type
+	 *        int    $priority
 	 * @return void
 	 */
-	public static function save_queue($method, $options, $duplicate_type = null)
+	public static function save_queue($method, $options, $duplicate_type = null, $priority = null)
 	{
 		if(is_null($duplicate_type))
 		{
 			$duplicate_type = static::DUPLICATE_TYPE_NONE;
 		}
+		if(is_null($priority))
+		{
+			$priority = \Config::get('queue.queue_default_priority');
+		}
 		$save_data = array(
 			'method'         => $method,
 			'options'        => \Format::forge($options)->to_json(),
+			'priority'       => $priority,
 			'duplicate_type' => $duplicate_type,
 			'job_status'     => static::STATUS_WAIT,
 			'deleted'        => \Config::get('queue.logical_delete.not_deleted'),

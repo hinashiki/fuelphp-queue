@@ -3,7 +3,7 @@
  * Queue Package
  *
  * @package    Queue
- * @version    0.1
+ * @version    0.2
  * @author     Hinashiki
  * @license    MIT License
  * @copyright  2015 - Hinashiki

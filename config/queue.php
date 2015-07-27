@@ -3,7 +3,7 @@
  * Queue Package
  *
  * @package    Queue
- * @version    0.1
+ * @version    0.2
  * @author     Hinashiki
  * @license    MIT License
  * @copyright  2015 - Hinashiki
@@ -55,6 +55,12 @@ return array(
 	 * this number apply in each server.
 	 */
 	'queue_parallel_number' => 3,
+
+	/**
+	 * queue_default_priority
+	 * default num of priority. 0 is top priority task.
+	 */
+	'queue_default_priority' => 100,
 
 	/**
 	 * queue_pid_prefix
