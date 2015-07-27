@@ -33,7 +33,7 @@ php oil refine queue
 ------
 
 ## Model_Taskqueue documentation
-#### `save_queue($method, $options, $duplicate_type = null)`
+#### `save_queue($method, $options, $duplicate_type = null, $priority = null)`
 Push task queue.
 
 ##### String `$method`
@@ -79,6 +79,11 @@ Default value is `-14 days`.
 #### `queue.queue_parallel_number`
 Number of you can execute task `queues` in Parallel.  
 Default value is `3`.
+
+#### `queue.queue_default_priority`
+Can set priority number. `0` is top priority.  
+You can set task priority when queue insert using `Model_TaskQueue::save_queue()`.  
+Default value is `100`.
 
 #### `queue.queue_pid_prefix`
 Task `queues` are managed by pid file. Pid file is created tmp directory in your application.  
