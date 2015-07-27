@@ -57,6 +57,12 @@ return array(
 	'queue_parallel_number' => 3,
 
 	/**
+	 * queue_default_priority
+	 * default num of priority. 0 is top priority task.
+	 */
+	'queue_default_priority' => 100,
+
+	/**
 	 * queue_pid_prefix
 	 */
 	'queue_pid_prefix' => 'queue',
