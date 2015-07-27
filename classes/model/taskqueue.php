@@ -60,6 +60,7 @@ class Model_TaskQueue extends \Orm\Model
 			->where('job_status', static::STATUS_WAIT)
 			->where('deleted', \Config::get('queue.logical_delete.not_deleted'))
 			->limit(1)
+			->order_by('priority', 'ASC')
 			->order_by('id', 'ASC');
 		if( ! empty($exclude_type))
 		{
